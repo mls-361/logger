@@ -1,4 +1,4 @@
-module github.com/mls-361/uuid
+module github.com/mls-361/logger
 
 go 1.15
 
