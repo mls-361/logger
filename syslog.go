@@ -63,9 +63,9 @@ func NewOutputSyslog(facility, appName string) (*OutputSyslog, error) {
 
 // Write AFAIRE.
 func (o *OutputSyslog) Write(buf *buffer.Buffer, log *Logger, level Level, msg string, data ...interface{}) error {
-	buf.AppendRightJustifiedString(log.name, '.', _maxNameLen)
+	buf.AppendRJString(log.name, '.', _maxNameLen)
 	buf.AppendByte(':')
-	buf.AppendRightJustifiedString(log.id, '.', _maxIDLen)
+	buf.AppendRJString(log.id, '.', _maxIDLen)
 	buf.AppendByte(' ')
 	buf.AppendString(msg)
 
