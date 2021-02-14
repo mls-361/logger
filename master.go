@@ -8,10 +8,6 @@ package logger
 
 import "sync"
 
-const (
-	_defaultFacility = "local4"
-)
-
 type (
 	loggers struct {
 		all   map[string]*Logger
@@ -58,9 +54,9 @@ func (m *Master) Build(id, name, level string, output Output) error {
 		if err != nil {
 			return err
 		}
-
-		m.output = output
 	}
+
+	m.output = output
 
 	m.Logger = &Logger{
 		id:      id,

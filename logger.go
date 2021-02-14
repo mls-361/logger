@@ -79,7 +79,7 @@ func (log *Logger) SetLevel(level string) {
 	log.storeLevel(StringToLevel(level))
 }
 
-// CreateChild AFAIRE.
+// CreateLogger AFAIRE.
 func (log *Logger) CreateLogger(id, name string) *Logger {
 	logger := &Logger{
 		id:      id,
@@ -94,13 +94,9 @@ func (log *Logger) CreateLogger(id, name string) *Logger {
 	return logger
 }
 
-// RemoveChild AFAIRE.
-func (log *Logger) RemoveLogger(id string) {
-	if id == "" {
-		id = log.id
-	}
-
-	log.loggers.remove(id)
+// Remove AFAIRE.
+func (log *Logger) Remove() {
+	log.loggers.remove(log.id)
 }
 
 /*

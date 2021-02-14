@@ -14,8 +14,9 @@ import (
 )
 
 const (
-	_maxIDLen   = 8
-	_maxNameLen = 10
+	_maxIDLen        = 8
+	_maxNameLen      = 10
+	_defaultFacility = "local4"
 )
 
 type (
