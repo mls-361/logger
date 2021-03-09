@@ -98,7 +98,7 @@ func (log *logger) SetLevel(level string) {
 }
 
 // CreateLogger AFAIRE.
-func (log *logger) CreateLogger(id, name string) *logger {
+func (log *logger) CreateLogger(id, name string) Logger {
 	logger := &logger{
 		id:      id,
 		name:    name,
