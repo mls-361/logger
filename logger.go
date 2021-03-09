@@ -6,7 +6,11 @@
 
 package logger
 
-import "github.com/mls-361/buffer"
+import (
+	"log"
+
+	"github.com/mls-361/buffer"
+)
 
 const (
 	_bufSize = 256
@@ -18,7 +22,21 @@ var (
 
 type (
 	// Logger AFAIRE.
-	Logger struct {
+	Logger interface {
+		Trace(msg string, data ...interface{})
+		Debug(msg string, data ...interface{})
+		Info(msg string, data ...interface{})
+		Notice(msg string, data ...interface{})
+		Warning(msg string, data ...interface{})
+		Error(msg string, data ...interface{})
+		Fatal(msg string, data ...interface{})
+		SetLevel(level string)
+		CreateLogger(id, name string) Logger
+		Remove()
+		NewStdLogger(level, prefix string, flag int) *log.Logger
+	}
+
+	logger struct {
 		id      string
 		name    string
 		level   Level
@@ -27,7 +45,7 @@ type (
 	}
 )
 
-func (log *Logger) write(level Level, msg string, data ...interface{}) {
+func (log *logger) write(level Level, msg string, data ...interface{}) {
 	if level < log.loadLevel() {
 		return
 	}
@@ -40,48 +58,48 @@ func (log *Logger) write(level Level, msg string, data ...interface{}) {
 }
 
 // Trace AFAIRE.
-func (log *Logger) Trace(msg string, data ...interface{}) {
+func (log *logger) Trace(msg string, data ...interface{}) {
 	log.write(LevelTrace, msg, data...)
 }
 
 // Debug AFAIRE.
-func (log *Logger) Debug(msg string, data ...interface{}) {
+func (log *logger) Debug(msg string, data ...interface{}) {
 	log.write(LevelDebug, msg, data...)
 }
 
 // Info AFAIRE.
-func (log *Logger) Info(msg string, data ...interface{}) {
+func (log *logger) Info(msg string, data ...interface{}) {
 	log.write(LevelInfo, msg, data...)
 }
 
 // Notice AFAIRE.
-func (log *Logger) Notice(msg string, data ...interface{}) {
+func (log *logger) Notice(msg string, data ...interface{}) {
 	log.write(LevelNotice, msg, data...)
 }
 
 // Warning AFAIRE.
-func (log *Logger) Warning(msg string, data ...interface{}) {
+func (log *logger) Warning(msg string, data ...interface{}) {
 	log.write(LevelWarning, msg, data...)
 }
 
 // Error AFAIRE.
-func (log *Logger) Error(msg string, data ...interface{}) {
+func (log *logger) Error(msg string, data ...interface{}) {
 	log.write(LevelError, msg, data...)
 }
 
 // Fatal AFAIRE.
-func (log *Logger) Fatal(msg string, data ...interface{}) {
+func (log *logger) Fatal(msg string, data ...interface{}) {
 	log.write(LevelFatal, msg, data...)
 }
 
 // SetLevel AFAIRE.
-func (log *Logger) SetLevel(level string) {
+func (log *logger) SetLevel(level string) {
 	log.storeLevel(StringToLevel(level))
 }
 
 // CreateLogger AFAIRE.
-func (log *Logger) CreateLogger(id, name string) *Logger {
-	logger := &Logger{
+func (log *logger) CreateLogger(id, name string) *logger {
+	logger := &logger{
 		id:      id,
 		name:    name,
 		level:   log.loadLevel(),
@@ -95,7 +113,7 @@ func (log *Logger) CreateLogger(id, name string) *Logger {
 }
 
 // Remove AFAIRE.
-func (log *Logger) Remove() {
+func (log *logger) Remove() {
 	log.loggers.remove(log.id)
 }
 

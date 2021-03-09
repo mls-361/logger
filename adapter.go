@@ -13,7 +13,7 @@ import (
 type (
 	adapter struct {
 		level  Level
-		logger *Logger
+		logger *logger
 	}
 )
 
@@ -23,7 +23,7 @@ func (a *adapter) Write(p []byte) (int, error) {
 }
 
 // NewStdLogger AFAIRE.
-func (log *Logger) NewStdLogger(level, prefix string, flag int) *_log.Logger {
+func (log *logger) NewStdLogger(level, prefix string, flag int) *_log.Logger {
 	a := &adapter{
 		level:  StringToLevel(level),
 		logger: log,

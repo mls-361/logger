@@ -11,7 +11,7 @@ import "github.com/mls-361/buffer"
 type (
 	// Output AFAIRE.
 	Output interface {
-		Write(buf *buffer.Buffer, log *Logger, level Level, msg string, data ...interface{}) error
+		Write(buf *buffer.Buffer, log *logger, level Level, msg string, data ...interface{}) error
 		Close() error
 	}
 )

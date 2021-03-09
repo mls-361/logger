@@ -49,11 +49,11 @@ func StringToLevel(level string) Level {
 	}
 }
 
-func (log *Logger) loadLevel() Level {
+func (log *logger) loadLevel() Level {
 	return Level(atomic.LoadInt64((*int64)(&log.level)))
 }
 
-func (log *Logger) storeLevel(level Level) {
+func (log *logger) storeLevel(level Level) {
 	atomic.StoreInt64((*int64)(&log.level), int64(level))
 }
 

@@ -10,12 +10,12 @@ import "sync"
 
 type (
 	loggers struct {
-		all   map[string]*Logger
+		all   map[string]*logger
 		mutex sync.Mutex
 	}
 )
 
-func (ls *loggers) add(log *Logger) {
+func (ls *loggers) add(log *logger) {
 	ls.mutex.Lock()
 	ls.all[log.id] = log
 	ls.mutex.Unlock()
@@ -30,7 +30,7 @@ func (ls *loggers) remove(id string) {
 type (
 	// Master AFAIRE.
 	Master struct {
-		*Logger
+		*logger
 		output  Output
 		loggers *loggers
 	}
@@ -40,7 +40,7 @@ type (
 func New() *Master {
 	return &Master{
 		loggers: &loggers{
-			all: make(map[string]*Logger),
+			all: make(map[string]*logger),
 		},
 	}
 }
@@ -58,7 +58,7 @@ func (m *Master) Build(id, name, level string, output Output) error {
 
 	m.output = output
 
-	m.Logger = &Logger{
+	m.logger = &logger{
 		id:      id,
 		name:    name,
 		level:   StringToLevel(level),
@@ -66,7 +66,7 @@ func (m *Master) Build(id, name, level string, output Output) error {
 		loggers: m.loggers,
 	}
 
-	m.loggers.add(m.Logger)
+	m.loggers.add(m.logger)
 
 	return nil
 }
